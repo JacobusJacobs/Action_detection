@@ -154,14 +154,37 @@ class TPN:
         :tensor conv2: conv2 feature cube (64x8x150x200)
         """
 
-        pdb.set_trace()
+        # pdb.set_trace()
 
         scaled_bboxes = bboxes.detach().clone()
+        # print(scaled_bboxes.shape)
+        # print(scaled_bboxes)
         scaled_bboxes[:, [0, 3]] *= 200 / 19  # update H, y
+        # print(scaled_bboxes.shape)
+        # print(scaled_bboxes)
         scaled_bboxes[:, [1, 2]] *= 150 / 25  # update W, x
+        # print(scaled_bboxes.shape)
+        # print(scaled_bboxes)
         scaled_bboxes = scaled_bboxes.numpy().astype(np.int64)
+        # print(scaled_bboxes.shape)
+        # print(scaled_bboxes)
 
         # slice tubes from conv2 feature map
+        print(conv2.shape)
+        print(scaled_bboxes[:, 0])
+        print(scaled_bboxes[:, 1])
+        print(scaled_bboxes[:, 2])
+        print(scaled_bboxes[:, 3])
+        
+        print(scaled_bboxes[:, 2] - scaled_bboxes[:, 1] / 2)
+        print(scaled_bboxes[:, 2] + scaled_bboxes[:, 1] / 2)
+       
+        print([:, :, :,
+                           scaled_bboxes[:, 2] - scaled_bboxes[:, 1] / 2:
+                           scaled_bboxes[:, 2] + scaled_bboxes[:, 1] / 2,
+                           scaled_bboxes[:, 3] - scaled_bboxes[:, 0] / 2:
+                           scaled_bboxes[:, 3] + scaled_bboxes[:, 0] / 2]) 
+       
         tubes = conv2.data[:, :, :,
                            scaled_bboxes[:, 2] - scaled_bboxes[:, 1] / 2:
                            scaled_bboxes[:, 2] + scaled_bboxes[:, 1] / 2,

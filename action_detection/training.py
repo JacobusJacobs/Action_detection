@@ -18,14 +18,16 @@ warnings.filterwarnings('ignore')
 
 if __name__ == "__main__":
 
-    DATA = Path('data')
+    DATA = Path('C:/Users/Jacobus/Desktop/ucf_sports_actions/ucf_sports_actions/ucf action')
 
     data_map = defaultdict(dict)
 
     for cat in DATA.iterdir():
+        # print(cat)
         if str(cat) == 'data/Lifting':
             continue
         for batch in Path(cat).iterdir():
+            # print(batch)
             images = glob.glob(str(batch) + '/*.jpg')
             captions = glob.glob(str(batch) + '/gt/*.txt')
             if len(captions) < 10:
@@ -79,9 +81,13 @@ if __name__ == "__main__":
                                                     sampler=valid_sampler)
 
     EPOCHS = 10
-
+    
+    
+    
     for epoch in range(EPOCHS):
-
+        
+        epoch = 1
+        
         running_loss = 0.0
         for i, data in enumerate(train_loader):
             optimizer.zero_grad()
